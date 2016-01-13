@@ -5,6 +5,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Bones\Building\Elevator;
 use Bones\Building\Resident;
 use Bones\Building\Floor;
 
@@ -17,6 +18,12 @@ class ResidentContext implements Context, SnippetAcceptingContext
      * @var Resident
      */
     protected $resident;
+
+    protected $targetFloor;
+
+    protected $elevator;
+
+
     /**
      * Initializes context.
      *
@@ -26,7 +33,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-
+        $this->elevator = new Elevator();
     }
 
 
@@ -36,7 +43,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
     public function iAmOnTheGroundFloor()
     {
         $groundFloor = new Floor(0);
-        $this->resident = Resident::createOnTheFloor(new Floor(0));
+        $this->resident = Resident::createOnTheFloor($groundFloor);
 
     }
 
@@ -45,7 +52,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function iHaveToReachAnotherFloor()
     {
-        throw new PendingException();
+        $this->targetFloor = new Floor(6);
     }
 
     /**
@@ -53,7 +60,8 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function theElevatorIsNotOnMyFloor()
     {
-        throw new PendingException();
+        $myFloor = $this->resident->getCurrentFloor();
+        $this->elevator->isOnTheFloor($myFloor) == false;
     }
 
     /**
@@ -61,7 +69,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function iCallTheElevatorWithTheUpButton()
     {
-        throw new PendingException();
+       $this->resident->callElevator($this->elevator, Elevator::UP_BUTTON);
     }
 
     /**

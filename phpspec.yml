@@ -7,3 +7,5 @@ suites:
 
 extensions:
     - RMiller\BehatSpec\PhpSpecExtension
+
+formatter.name: pretty

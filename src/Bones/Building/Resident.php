@@ -7,32 +7,43 @@ class Resident
     /**
      * @var Floor
      */
-    protected $floor;
+    protected $currentFloor;
 
-    private function __construct()
-    {
+    protected function __construct() {}
 
-    }
-
+    /**
+     * @param Floor $floor
+     * @return Resident
+     */
     public static function createOnTheFloor(Floor $floor)
     {
         $resident = new Resident();
         $resident->setFloor($floor);
+
+        return $resident;
     }
 
     /**
      * @return Floor
      */
-    public function getFloor()
+    public function getCurrentFloor()
     {
-        return $this->floor;
+        return $this->currentFloor;
     }
+
 
     /**
      * @param Floor $floor
      */
     private function setFloor($floor)
     {
-        $this->floor = $floor;
+        $this->currentFloor = $floor;
     }
+
+    public function callElevator()
+    {
+        // TODO: write logic here
+    }
+
+
 }

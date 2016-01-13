@@ -8,6 +8,19 @@ class Floor
 
     public function __construct($floorNumber)
     {
-        $this->floor = $floorNumber;
+        $this->floorNumber = $floorNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFloorNumber()
+    {
+        return $this->floorNumber;
+    }
+
+    public function isEqual(Floor $floor)
+    {
+        return ($this->floorNumber == $floor->getFloorNumber());
     }
 }
