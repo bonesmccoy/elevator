@@ -2,6 +2,8 @@
 
 namespace Bones\Building\Elevator;
 
+use Bones\Building\Resident;
+
 class Controller
 {
     /**
@@ -26,8 +28,9 @@ class Controller
         return $this->elevator;
     }
 
-    public function pressUpButton()
+    public function pressUpButton(Resident $resident)
     {
-        // TODO: write logic here
+        $residentFloor = $resident->getCurrentFloor();
+        $this->elevator->goToFloor($residentFloor);
     }
 }

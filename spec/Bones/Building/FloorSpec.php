@@ -27,4 +27,23 @@ class FloorSpec extends ObjectBehavior
         $anotherFloor = new Floor(4);
         $this->isEqual($anotherFloor)->shouldBeLike(false);
     }
+
+    function it_should_be_above_another_floor()
+    {
+        $this->beConstructedWith(5);
+
+        $this->isAbove(new Floor(4))->shouldBeLike(true);
+        $this->isAbove(new Floor(6))->shouldBeLike(false);
+        $this->isAbove(new Floor(5))->shouldBeLike(false);
+
+    }
+
+    function it_should_be_below_another_floor()
+    {
+        $this->beConstructedWith(5);
+        
+        $this->isBelow(new Floor(4))->shouldBeLike(false);
+        $this->isBelow(new Floor(6))->shouldBeLike(true);
+        $this->isBelow(new Floor(5))->shouldBeLike(false);
+    }
 }

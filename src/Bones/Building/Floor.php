@@ -23,4 +23,18 @@ class Floor
     {
         return ($this->floorNumber == $floor->getFloorNumber());
     }
+
+    public function isAbove(Floor $floor)
+    {
+        if ($this->isEqual($floor)) return false;
+
+        return  ($this->floorNumber > $floor->getFloorNumber());
+    }
+
+    public function isBelow(Floor $floor)
+    {
+        if ($this->isEqual($floor)) return false;
+
+        return ($this->floorNumber < $floor->getFloorNumber());
+    }
 }

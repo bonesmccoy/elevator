@@ -30,4 +30,36 @@ class Elevator
     {
         return new Elevator($floor);
     }
+
+    public function goToFloor(Floor $floor)
+    {
+        if ($this->currentFloor->isEqual($floor)) return;
+
+        if ($this->currentFloor->isAbove($floor)) {
+            $this->decreaseTheFloorUntil($floor->getFloorNumber());
+        } else {
+            $this->increaseTheFloorUntil($floor->getFloorNumber());
+        }
+    }
+
+    private function decreaseTheFloorUntil($floorNumber)
+    {
+        $currentFloorNumber = $this->currentFloor->getFloorNumber();
+        while($currentFloorNumber > $floorNumber) {
+            $currentFloorNumber--;
+        }
+
+        $this->currentFloor = new Floor($currentFloorNumber);
+    }
+
+    public function increaseTheFloorUntil($floorNumber)
+    {
+        $currentFloorNumber = $this->currentFloor->getFloorNumber();
+        while($currentFloorNumber > $floorNumber) {
+            $currentFloorNumber++;
+        }
+
+        $this->currentFloor = new Floor($currentFloorNumber);
+    }
+
 }
