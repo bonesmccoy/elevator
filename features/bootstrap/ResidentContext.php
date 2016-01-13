@@ -5,7 +5,8 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
-use Bones\Building\Elevator;
+use Bones\Building\Elevator\Controller as ElevatorController;
+use Bones\Building\Elevator\Elevator;
 use Bones\Building\Resident;
 use Bones\Building\Floor;
 
@@ -19,9 +20,15 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     protected $resident;
 
+    /**
+     * @var Floor
+     */
     protected $targetFloor;
 
-    protected $elevator;
+    /**
+     * @var ElevatorController
+     */
+    protected $elevatorController;
 
 
     /**
@@ -33,7 +40,9 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function __construct()
     {
-        $this->elevator = new Elevator();
+        $elevator = Elevator::createAtFloor(new Floor(5));
+        $this->elevatorController = new ElevatorController($elevator);
+
     }
 
 
@@ -53,6 +62,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
     public function iHaveToReachAnotherFloor()
     {
         $this->targetFloor = new Floor(6);
+        $this->resident->moveToFloor($this->targetFloor);
     }
 
     /**
@@ -60,8 +70,10 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function theElevatorIsNotOnMyFloor()
     {
-        $myFloor = $this->resident->getCurrentFloor();
-        $this->elevator->isOnTheFloor($myFloor) == false;
+        $residentCurrentFloor = $this->resident->getCurrentFloor();
+        if ($this->elevatorController->getElevator()->isOnTheFloor($residentCurrentFloor)) {
+            throw new \Exception("The Elevator is on My Floor, should be in Another");
+        }
     }
 
     /**
@@ -69,7 +81,7 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function iCallTheElevatorWithTheUpButton()
     {
-       $this->resident->callElevator($this->elevator, Elevator::UP_BUTTON);
+       $this->elevatorController->pressUpButton($this->resident);
     }
 
     /**
@@ -77,7 +89,9 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function theElevatorReachTheGroundFloor()
     {
-        throw new PendingException();
+        if (!$this->elevatorController->getElevator()->isOnTheFloor($this->resident->getCurrentFloor())) {
+            throw new \Exception("The Elevator is not on my floor");
+        }
     }
 
     /**
@@ -85,7 +99,13 @@ class ResidentContext implements Context, SnippetAcceptingContext
      */
     public function theElevatorIsOnMyFloor()
     {
-        throw new PendingException();
+        $groundFloor = new Floor(0);
+        $this->resident = Resident::createOnTheFloor($groundFloor);
+        $residentCurrentFloor = $this->resident->getCurrentFloor();
+
+        if ($this->elevatorController->getElevator()->isOnTheFloor($residentCurrentFloor)) {
+            throw new \Exception("The Elevator should be in my floor");
+        }
     }
 
     /**

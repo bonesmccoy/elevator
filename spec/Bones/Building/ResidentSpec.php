@@ -20,8 +20,8 @@ class ResidentSpec extends ObjectBehavior
         $this->shouldHaveType('Bones\Building\Resident');
     }
 
-    public function it_should_call_elevator()
+    public function it_should_move_to_floor()
     {
-        $this->callElevator();
+        $this->moveToFloor(new Floor(10));
     }
 }

@@ -9,6 +9,8 @@ class Resident
      */
     protected $currentFloor;
 
+    protected $targetFloor = null;
+
     protected function __construct() {}
 
     /**
@@ -40,9 +42,12 @@ class Resident
         $this->currentFloor = $floor;
     }
 
-    public function callElevator()
+    /**
+     * @param Floor $floor
+     */
+    public function moveToFloor(Floor $floor)
     {
-        // TODO: write logic here
+        $this->targetFloor = $floor;
     }
 
 

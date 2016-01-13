@@ -10,7 +10,8 @@ Scenario: Calling the elevator
 	Then the elevator reach the ground floor
 
 Scenario: Using the elevator
-	Given The elevator is on my floor
+	Given I am on the ground floor
+	And The elevator is on my floor
 	And I enter the elevator
 	When I press the floor 6 button
 	Then the elevator reach the floor number 6
