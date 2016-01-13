@@ -1,0 +1,14 @@
+{
+    "require-dev": {
+        "phpspec/phpspec": "2.4.1",
+	    "behat/behat" : "3.0.15",
+        "rmiller/behat-spec": "~0.2"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {"": "src"},
+        "psr-4": {"": "src/"}
+    }
+}

@@ -1,0 +1,10 @@
+default:
+    suites:
+        default:
+            contexts:
+                - ResidentContext
+
+    extensions:
+        RMiller\BehatSpec\BehatExtension:
+            path: bin/phpspec
+            config: phpspec.yml

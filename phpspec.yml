@@ -1,0 +1,9 @@
+suites:
+    default:
+        namespace: Bones\Building
+        rerunner:
+            path: bin/phpspec
+            commands: [describe, exemplify]
+
+extensions:
+    - RMiller\BehatSpec\PhpSpecExtension
