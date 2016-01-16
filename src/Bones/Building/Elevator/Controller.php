@@ -2,6 +2,7 @@
 
 namespace Bones\Building\Elevator;
 
+use Bones\Building\Floor;
 use Bones\Building\Resident;
 
 class Controller
@@ -31,6 +32,19 @@ class Controller
     public function pressUpButton(Resident $resident)
     {
         $residentFloor = $resident->getCurrentFloor();
-        $this->elevator->goToFloor($residentFloor);
+        $this->elevator->moveToFloor($residentFloor);
+    }
+
+    public function pressDownButton(Resident $resident)
+    {
+        $residentFloor = $resident->getCurrentFloor();
+        $this->elevator->moveToFloor($residentFloor);
+    }
+
+    public function pressButtonWithNumber($floorNumber, Resident $resident)
+    {
+        $targetFloor = new Floor($floorNumber);
+        $this->elevator->moveToFloor($targetFloor);
+        $resident->setCurrentFloor($targetFloor);
     }
 }

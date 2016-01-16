@@ -31,7 +31,7 @@ class Elevator
         return new Elevator($floor);
     }
 
-    public function goToFloor(Floor $floor)
+    public function moveToFloor(Floor $floor)
     {
         if ($this->currentFloor->isEqual($floor)) return;
 

@@ -57,15 +57,6 @@ class ResidentContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given I have to reach another floor
-     */
-    public function iHaveToReachAnotherFloor()
-    {
-        $this->targetFloor = new Floor(6);
-        $this->resident->moveToFloor($this->targetFloor);
-    }
-
-    /**
      * @Given the elevator is not on my floor
      */
     public function theElevatorIsNotOnMyFloor()
@@ -109,27 +100,39 @@ class ResidentContext implements Context, SnippetAcceptingContext
     }
 
     /**
-     * @Given I enter the elevator
+     * @When I press the floor :floorNumber button
      */
-    public function iEnterTheElevator()
+    public function iPressTheFloorButton($floorNumber)
     {
-        throw new PendingException();
+        $this->elevatorController->pressButtonWithNumber($floorNumber, $this->resident);
     }
 
     /**
-     * @When I press the floor :arg1 button
+     * @Then the elevator reach the floor number :floorNumber
      */
-    public function iPressTheFloorButton($arg1)
+    public function theElevatorReachTheFloorNumber($floorNumber)
     {
-        throw new PendingException();
+        $targetFloor = new Floor($floorNumber);
+        $elevatorFloor = $this->elevatorController->getElevator()->getCurrentFloor();
+        if (!$this->elevatorController->getElevator()->getCurrentFloor()->isEqual($targetFloor)) {
+            throw new \Exception(
+                sprintf("The Elevator should be in the floor number %s, found in floor %s",
+                    $floorNumber,
+                    $elevatorFloor->getFloorNumber()
+                ));
+        }
     }
 
     /**
-     * @Then the elevator reach the floor number :arg1
+     * @Then I am in the floor number :floorNumber
      */
-    public function theElevatorReachTheFloorNumber($arg1)
+    public function iAmInTheFloorNumber($floorNumber)
     {
-        throw new PendingException();
+        $targetFloor = new Floor($floorNumber);
+        if (!$this->resident->getCurrentFloor()->isEqual($targetFloor)) {
+            throw new \Exception("The I should be in the floor number $floorNumber");
+        }
     }
+
 
 }

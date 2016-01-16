@@ -4,7 +4,6 @@ Feature: resident
 
 Scenario: Calling the elevator
 	Given I am on the ground floor
-	And I have to reach another floor
 	And the elevator is not on my floor
 	When I call the elevator with the up button
 	Then the elevator reach the ground floor
@@ -12,6 +11,6 @@ Scenario: Calling the elevator
 Scenario: Using the elevator
 	Given I am on the ground floor
 	And The elevator is on my floor
-	And I enter the elevator
 	When I press the floor 6 button
 	Then the elevator reach the floor number 6
+    And I am in the floor number 6

@@ -20,7 +20,7 @@ class Resident
     public static function createOnTheFloor(Floor $floor)
     {
         $resident = new Resident();
-        $resident->setFloor($floor);
+        $resident->setCurrentFloor($floor);
 
         return $resident;
     }
@@ -37,7 +37,7 @@ class Resident
     /**
      * @param Floor $floor
      */
-    private function setFloor($floor)
+    public function setCurrentFloor($floor)
     {
         $this->currentFloor = $floor;
     }
