@@ -55,7 +55,7 @@ class Elevator
     public function increaseTheFloorUntil($floorNumber)
     {
         $currentFloorNumber = $this->currentFloor->getFloorNumber();
-        while($currentFloorNumber > $floorNumber) {
+        while($currentFloorNumber < $floorNumber) {
             $currentFloorNumber++;
         }
 
