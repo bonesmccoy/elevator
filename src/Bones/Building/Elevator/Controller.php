@@ -13,6 +13,11 @@ class Controller
     private $elevator;
 
     /**
+     * @var Resident[]
+     */
+    private $callerResidentList = array();
+
+    /**
      * Controller constructor.
      * @param Elevator $elevator
      */
@@ -32,12 +37,14 @@ class Controller
     public function pressUpButton(Resident $resident)
     {
         $residentFloor = $resident->getCurrentFloor();
+        $this->addCallerResident($resident);
         $this->elevator->moveToFloor($residentFloor);
     }
 
     public function pressDownButton(Resident $resident)
     {
         $residentFloor = $resident->getCurrentFloor();
+        $this->addCallerResident($resident);
         $this->elevator->moveToFloor($residentFloor);
     }
 
@@ -46,5 +53,24 @@ class Controller
         $targetFloor = new Floor($floorNumber);
         $this->elevator->moveToFloor($targetFloor);
         $resident->setCurrentFloor($targetFloor);
+    }
+
+    public function moveElevator()
+    {
+        foreach($this->callerResidentList as $resident)
+        {
+            $this->elevator->moveToFloor($resident->getCurrentFloor());
+            $resident->setCurrentFloor($resident->getTargetFloor());
+        }
+    }
+
+    private function addCallerResident(Resident $floor)
+    {
+        $this->callerResidentList[] = $floor;
+    }
+
+    private function resetCallerList()
+    {
+        $this->callerResidentList = array();
     }
 }

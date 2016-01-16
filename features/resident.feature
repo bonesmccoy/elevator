@@ -6,11 +6,13 @@ Scenario: Calling the elevator
 	Given I am on the ground floor
 	And the elevator is not on my floor
 	When I call the elevator with the up button
+    And the elevator moves
 	Then the elevator reach the ground floor
 
 Scenario: Using the elevator
 	Given I am on the ground floor
 	And The elevator is on my floor
 	When I press the floor 6 button
+    And the elevator moves again
 	Then the elevator reach the floor number 6
     And I am in the floor number 6

@@ -50,5 +50,21 @@ class Resident
         $this->targetFloor = $floor;
     }
 
+    /**
+     * @return null
+     */
+    public function getTargetFloor()
+    {
+        return $this->targetFloor;
+    }
+
+
+
+
+
+
+
+
+
 
 }

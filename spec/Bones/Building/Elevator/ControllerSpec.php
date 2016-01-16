@@ -26,7 +26,7 @@ class ControllerSpec extends ObjectBehavior
         $this->getElevator()->shouldReturnAnInstanceOf('Bones\Building\Elevator\Elevator');
     }
 
-    public function it_should_reach_the_resident_floor_when_button_up_is_pressed($elevator)
+    public function it_should_move_the_elevator_to_the_resident_floor_when_button_up_is_pressed($elevator)
     {
         $elevator->beADoubleOf('Bones\Building\Elevator\Elevator');
         $resident = Resident::createOnTheFloor(new Floor(0));
@@ -34,10 +34,12 @@ class ControllerSpec extends ObjectBehavior
         $this->beConstructedWith($elevator);
         $this->pressUpButton($resident);
 
+        $this->moveElevator();
+
         $elevator->moveToFloor($resident->getCurrentFloor())->shouldHaveBeenCalled();
     }
 
-    public function it_should_reach_the_resident_floor_when_button_down_is_pressed($elevator)
+    public function it_should_move_the_elevator_to_the_resident_floor_when_button_down_is_pressed($elevator)
     {
         $elevator->beADoubleOf('Bones\Building\Elevator\Elevator');
         $resident = Resident::createOnTheFloor(new Floor(0));
@@ -45,11 +47,13 @@ class ControllerSpec extends ObjectBehavior
         $this->beConstructedWith($elevator);
         $this->pressDownButton($resident);
 
+        $this->moveElevator();
+
         $elevator->moveToFloor($resident->getCurrentFloor())->shouldHaveBeenCalled();
     }
 
 
-    public function it_should_press_button_with_number($elevator, $resident)
+    public function it_should_move_the_elevator_when_a_number_button_is_pressed($elevator, $resident)
     {
         //$resident = Resident::createOnTheFloor(new Floor(0));
         $elevator->beADoubleOf('Bones\Building\Elevator\Elevator');
@@ -59,8 +63,11 @@ class ControllerSpec extends ObjectBehavior
         $floorNumber = 6;
         $this->pressButtonWithNumber($floorNumber, $resident);
 
+        $this->moveElevator();
+
         $elevator->moveToFloor(new Floor($floorNumber))->shouldHaveBeenCalled();
-        $resident->moveToFloor(new Floor($floorNumber))->shouldHaveBeenCalled();
+        $resident->setCurrentFloor(new Floor($floorNumber))->shouldHaveBeenCalled();
 
     }
+
 }

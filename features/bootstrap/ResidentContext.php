@@ -76,6 +76,15 @@ class ResidentContext implements Context, SnippetAcceptingContext
     }
 
     /**
+     * @When the elevator moves
+     */
+    public function theElevatorMoves()
+    {
+        $this->elevatorController->moveElevator();
+    }
+
+
+    /**
      * @Then the elevator reach the ground floor
      */
     public function theElevatorReachTheGroundFloor()
@@ -105,6 +114,14 @@ class ResidentContext implements Context, SnippetAcceptingContext
     public function iPressTheFloorButton($floorNumber)
     {
         $this->elevatorController->pressButtonWithNumber($floorNumber, $this->resident);
+    }
+
+    /**
+     * @When the elevator moves again
+     */
+    public function theElevatorMovesAgain()
+    {
+        $this->elevatorController->moveElevator();
     }
 
     /**
